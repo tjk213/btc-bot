@@ -160,7 +160,7 @@ function update()
     }
 
     // Append to window list
-    windowSummaries += "Last " + windowSize + "s: " + percentChange + " = " + multipleChange + "\n";
+    windowSummaries += "<p>Last " + windowSize + "s: " + percentChange + " = " + multipleChange + "</p>";
   }
 
   // Build summary message
@@ -168,20 +168,22 @@ function update()
   // FIXME: the intention here is to make sure getUrl() points to the specified tab, but I don't
   // think setActiveSheet() accomplishes this.
   ss.setActiveSheet(ss.getSheets()[1]);
-  var message = "BTC hourly update:\n";
-  message += "\n";
-  message += currTime + ": $" + btcPrice + "\n";
-  message += "\n";
+  dataSrc = "All data available in btc-bot's <a href=" + ss.getUrl() + ">GoogleSheet</a>.";
+
+  var message = "<p>BTC hourly update:</p>";
+  message += "<p>" + "</p>";
+  message += "<p>" + currTime + ": $" + btcPrice + "</p>";
+  message += "<p>" + "</p>";
   message += windowSummaries;
-  message += "\n";
-  message += "Full details: " + ss.getUrl() + "\n";
-  message += "\n";
+  message += "<p>" + "</p>";
+  message += "<p>" + dataSrc + "</p>";
+  message += "<p>" + "</p>";
 
   // Send results
   MailApp.sendEmail({
     to: mailingList,
     subject: subject,
-    body: message
+    htmlBody: message
   });
 }
 
