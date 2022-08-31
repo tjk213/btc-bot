@@ -183,6 +183,7 @@ function update()
   MailApp.sendEmail({
     to: mailingList,
     subject: subject,
+    name: "BTC-bot",
     htmlBody: message
   });
 }
