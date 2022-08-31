@@ -164,6 +164,9 @@ function update()
   }
 
   // Build summary message
+
+  // FIXME: the intention here is to make sure getUrl() points to the specified tab, but I don't
+  // think setActiveSheet() accomplishes this.
   ss.setActiveSheet(ss.getSheets()[1]);
   var message = "BTC hourly update:\n";
   message += "\n";
