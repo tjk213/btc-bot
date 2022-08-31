@@ -1,0 +1,30 @@
+####################################################################################
+##               ,:                                                         ,:    ##
+##             ,' |                                                       ,' |    ##
+##            /   :                                                      /   :    ##
+##         --'   /       :::::::::::   :::::::::::   :::    :::       --'   /     ##
+##         \/ />/           :+:            :+:       :+:   :+:        \/ />/      ##
+##         / /_\           +:+            +:+       +:+  +:+          / /_\       ##
+##      __/   /           +#+            +#+       +#++:++         __/   /        ##
+##      )'-. /           +#+            +#+       +#+  +#+         )'-. /         ##
+##      ./  :\          #+#        #+# #+#       #+#   #+#         ./  :\         ##
+##       /.' '         ###         #####        ###    ###          /.' '         ##
+##     '/'                                                        '/'             ##
+##     +                                                          +               ##
+##    '                                                          '                ##
+####################################################################################
+##            Copyright © 2022 Tyler J. Kenney. All rights reserved.              ##
+####################################################################################
+####################################################################################
+
+## Note: The .claspignore patterns are applied by multimatch, which is different
+## from .gitignore, especially for directories. To ignore a directory, use syntax
+## like **/node_modules/**. See clasp readme for more details.
+
+
+## Ignore everything by default
+**/**
+
+## Whitelist only files that need to be deployed
+!Code.js
+!appsscript.json
