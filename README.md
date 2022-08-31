@@ -10,7 +10,7 @@
 
 ## Distribution
 
-The charts are auto-updated on a monthly basis and the results are shared via e-mail. If you would like to be added to the distribution list please send me a note at tjk213@gmail.com.
+The charts are auto-updated on a monthly basis and the results are shared via email. If you would like to be added to the distribution list please send me a note at tjk213@gmail.com.
 
 ## Development & Contributing
 
