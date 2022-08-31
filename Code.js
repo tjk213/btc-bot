@@ -18,16 +18,16 @@
 ////////////////////////////////////////////////////////////////////////////////////
 
 
-//  _______  ________ ______         _______   ______  ________ 
+//  _______  ________ ______         _______   ______  ________
 // /       \/        /      \       /       \ /      \/        |
-// $$$$$$$  $$$$$$$$/$$$$$$  |      $$$$$$$  /$$$$$$  $$$$$$$$/ 
-// $$ |__$$ |  $$ | $$ |  $$/       $$ |__$$ $$ |  $$ |  $$ |   
-// $$    $$<   $$ | $$ |            $$    $$<$$ |  $$ |  $$ |   
-// $$$$$$$  |  $$ | $$ |   __       $$$$$$$  $$ |  $$ |  $$ |   
-// $$ |__$$ |  $$ | $$ \__/  |      $$ |__$$ $$ \__$$ |  $$ |   
-// $$    $$/   $$ | $$    $$/       $$    $$/$$    $$/   $$ |   
-// $$$$$$$/    $$/   $$$$$$/        $$$$$$$/  $$$$$$/    $$/    
-//                                           
+// $$$$$$$  $$$$$$$$/$$$$$$  |      $$$$$$$  /$$$$$$  $$$$$$$$/
+// $$ |__$$ |  $$ | $$ |  $$/       $$ |__$$ $$ |  $$ |  $$ |
+// $$    $$<   $$ | $$ |            $$    $$<$$ |  $$ |  $$ |
+// $$$$$$$  |  $$ | $$ |   __       $$$$$$$  $$ |  $$ |  $$ |
+// $$ |__$$ |  $$ | $$ \__/  |      $$ |__$$ $$ \__$$ |  $$ |
+// $$    $$/   $$ | $$    $$/       $$    $$/$$    $$/   $$ |
+// $$$$$$$/    $$/   $$$$$$/        $$$$$$$/  $$$$$$/    $$/
+//
 
 // Email distribution subject.
 var subject = 'BTC Update'
@@ -36,7 +36,7 @@ var subject = 'BTC Update'
 var mailingList = 'tjk213@gmail.com'
 
 // Return the price in USD of the given token.
-function getPrice(coin) 
+function getPrice(coin)
 {
   var url = "https://cryptoprices.cc/" + coin;
   var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
@@ -107,7 +107,7 @@ function addRow(ss,searchCol="A",numCols=32)
 //   - Append row to each 'Rolling ROI' sheet
 //   - Email results
 //
-function update() 
+function update()
 {
   var ss = SpreadsheetApp.getActive();
   ss.setActiveSheet(ss.getSheetByName('Price Action - Hourly'));
@@ -117,7 +117,7 @@ function update()
   var btcPrice = getPrice("BTC");
 
   Logger.log(currTime + ": $" + btcPrice);
-  
+
   // Log time & price in history tab
   var nextRow = getLastRowInColumn(ss,"B") + 1;
   ss.getRange("R"+nextRow+"C2").setValue(currTime);
@@ -179,10 +179,10 @@ function update()
 }
 
 //
-//   ____ _______ _____   ____   ____ _______ 
+//   ____ _______ _____   ____   ____ _______
 //  |  _ |__   __/ ____| |  _ \ / __ |__   __|
-//  | |_) | | | | |      | |_) | |  | | | |   
-//  |  _ <  | | | |      |  _ <| |  | | | |   
-//  | |_) | | | | |____  | |_) | |__| | | |   
-//  |____/  |_|  \_____| |____/ \____/  |_|   
+//  | |_) | | | | |      | |_) | |  | | | |
+//  |  _ <  | | | |      |  _ <| |  | | | |
+//  | |_) | | | | |____  | |_) | |__| | | |
+//  |____/  |_|  \_____| |____/ \____/  |_|
 //
