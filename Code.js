@@ -175,7 +175,11 @@ function update()
   message += "\n";
 
   // Send results
-  GmailApp.createDraft(mailingList,subject,message).send();
+  MailApp.sendEmail({
+    to: mailingList,
+    subject: subject,
+    body: message
+  });
 }
 
 //
