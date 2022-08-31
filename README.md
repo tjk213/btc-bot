@@ -12,4 +12,14 @@ The charts are auto-updated on a monthly basis and the results are shared via e-
 
 ## Development & Contributing
 
-Deployment to the GoogleScripts system is managed through [Clasp](https://github.com/google/clasp). All other updates & requests are managed here through GitHub. If you would like to contribute or make a request please feel free to open an issue, PR, or contact me via email.
+Deployment to the GoogleScripts system is managed through [Clasp](https://github.com/google/clasp). 
+
+All other updates & requests are managed here through GitHub. If you would like to contribute or make a request please feel free to open an issue, PR, or contact me via email.
+
+## Troubleshooting
+
+If you have issues with clasp connecting to google, it may be a known issue. A few quick things to try:
+
+  - Enable Google Apps Script API (follow instructions [here](https://github.com/google/clasp#install))
+  - Downgrade to clasp v2.3.1 (see [this issue](https://github.com/google/clasp/issues/872))
+    - Run: `npm install -g @google/clasp@2.3.1`
