@@ -1,5 +1,7 @@
 # BTC-Bot: Rolling Bitcoin ROI
+[//]: # "This file uses null hyperlink labels for comments. See https://stackoverflow.com/questions/4823468/comments-in-markdown"
 
+[//]: # "Add clasp badge at top of readme (copied from clasp readme)"
 [![clasp](https://img.shields.io/badge/built%20with-clasp-4285f4.svg)](https://github.com/google/clasp)
 
 `btc-bot` is a GoogleScripts system for auto-updating google sheets with BTC historical data. The system produces charts that look something like this:
