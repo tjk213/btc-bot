@@ -28,3 +28,4 @@
 ## Whitelist only files that need to be deployed
 !Code.js
 !appsscript.json
+!EmailTemplate.html

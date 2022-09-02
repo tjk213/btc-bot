@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      table {
+	  border-collapse: collapse;
+	  width: 80%;
+      }
+
+      th, td {
+	  text-align: right;
+	  padding: 8px;
+      }
+
+      /* TODO: Make the table look pretty! */
+      /* tr:nth-child(even) { */
+      /* 	  background-color: #777777; */
+      /* } */
+      
+      /* tr:nth-child(odd) { */
+      /* 	  background-color: #000000; */
+      /* } */
+    </style>
+  </head>
+  <body>
+    <p>BTC hourly update:</p>
+    <p></p>
+    <p><?=currTime?>: $<?=btcPrice?></p>
+    <p></p>
+    
+    <table>
+      <tr> <th>Window Length</th><th>ROI (%)</th><th>ROI (X)</th></tr>
+      <?for (var i=0; i < windows.length; ++i) { ?>
+      <tr>
+	<td><?=windows[i].windowSize    ?></td>
+	<td><?=windows[i].percentChange ?></td>
+	<td><?=windows[i].multipleChange?></td>
+      </tr>
+      <?}?>
+    </table>
+    <p>All data available in btc-bot's <a href=<?=URL?>>GoogleSheet</a>.</p>
+    </body>
+</html>

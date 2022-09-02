@@ -134,7 +134,7 @@ function update()
   }
 
   // Extract results from each 'Rolling ROI' sheet
-  var windowSummaries = "";
+  var windows = [];
   for (var i=0; i < ss.getNumSheets(); ++i)
   {
     var sheet = ss.getSheets()[i];
@@ -144,23 +144,25 @@ function update()
       continue;
     }
 
+    var w = {};
+
     // Get window size from sheet name
     var nameLen = sheet.getName().length;
-    var windowSize = sheet.getName().substring(nameLen-4);
+    w.windowSize = sheet.getName().substring(nameLen-4);
 
     // Get change values
     var row = getLastRowInColumn(sheet,"G");
-    var percentChange  = sheet.getRange("G"+row).getDisplayValue();
-    var multipleChange = sheet.getRange("H"+row).getDisplayValue();
+    w.percentChange  = sheet.getRange("G"+row).getDisplayValue();
+    w.multipleChange = sheet.getRange("H"+row).getDisplayValue();
 
     // Verify change values
-    Logger.log(sheet.getName() + ": " + percentChange + " = " + multipleChange);
-    if (!percentChange.endsWith("%") || !multipleChange.endsWith("X")) {
+    Logger.log(sheet.getName() + ": " + w.percentChange + " = " + w.multipleChange);
+    if (!w.percentChange.endsWith("%") || !w.multipleChange.endsWith("X")) {
       throw Error("Invalid change value - column mismatch or formatting issue?");
     }
 
     // Append to window list
-    windowSummaries += "<p>Last " + windowSize + "s: " + percentChange + " = " + multipleChange + "</p>";
+    windows.push(w);
   }
 
   // Build summary message
@@ -168,16 +170,13 @@ function update()
   // FIXME: the intention here is to make sure getUrl() points to the specified tab, but I don't
   // think setActiveSheet() accomplishes this.
   ss.setActiveSheet(ss.getSheets()[1]);
-  dataSrc = "All data available in btc-bot's <a href=" + ss.getUrl() + ">GoogleSheet</a>.";
 
-  var message = "<p>BTC hourly update:</p>";
-  message += "<p>" + "</p>";
-  message += "<p>" + currTime + ": $" + btcPrice + "</p>";
-  message += "<p>" + "</p>";
-  message += windowSummaries;
-  message += "<p>" + "</p>";
-  message += "<p>" + dataSrc + "</p>";
-  message += "<p>" + "</p>";
+  var template = HtmlService.createTemplateFromFile('EmailTemplate.html');
+  template.currTime = currTime;
+  template.btcPrice = btcPrice;
+  template.URL = ss.getUrl();
+  template.windows = windows;
+  var message = template.evaluate().getContent();
 
   // Send results
   MailApp.sendEmail({
