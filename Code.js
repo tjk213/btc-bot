@@ -110,7 +110,7 @@ function addRow(ss,searchCol="A",numCols=32)
 function update()
 {
   var ss = SpreadsheetApp.getActive();
-  ss.setActiveSheet(ss.getSheetByName('Price Action - Hourly'));
+  ss.setActiveSheet(ss.getSheetByName('Price Log'));
 
   // Get time & price
   var currTime = getDateString();
