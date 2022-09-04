@@ -104,6 +104,7 @@ function addRow(ss,searchCol="A",numCols=32)
 // ROI windows.
 function buildHTMLSummary(price, windows)
 {
+  // TODO: How can we control the tab thats opened on-click?
   var URL = SpreadsheetApp.getActive().getUrl();
   var template = HtmlService.createTemplateFromFile('EmailTemplate.html');
 
@@ -179,11 +180,6 @@ function update()
   }
 
   // Send summary email.
-
-  // FIXME: the intention here is to make sure getUrl() points to the specified tab, but I don't
-  // think setActiveSheet() accomplishes this.
-  ss.setActiveSheet(ss.getSheets()[1]);
-
   MailApp.sendEmail({
     to: mailingList,
     subject: subject,
