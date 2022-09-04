@@ -192,6 +192,27 @@ function update()
   });
 }
 
+// Send update email with fake data.
+// No spreadsheet modifications.
+function testEmail()
+{
+  var currTime = getDateString();
+  var btcPrice = getPrice("BTC");
+
+  var windows = [
+    {windowSize: "Last 90 days:", percentChange: "+4.1%", multipleChange: "1.04X"},
+    {windowSize: "Last 60 days:", percentChange: "+3.1%", multipleChange: "1.03X"},
+    {windowSize: "Last 30 days:", percentChange: "+2.1%", multipleChange: "1.02X"}
+  ];
+
+  MailApp.sendEmail({
+    to: mailingList,
+    subject: subject,
+    name: "BTC-bot",
+    htmlBody: buildHTMLSummary(btcPrice,windows)
+  });
+}
+
 //
 //   ____ _______ _____   ____   ____ _______
 //  |  _ |__   __/ ____| |  _ \ / __ |__   __|
