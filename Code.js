@@ -100,6 +100,19 @@ function addRow(ss,searchCol="A",numCols=32)
   range.copyTo(ss.getRange("R"+nextrow+"C1"));
 }
 
+// Load template from EmailTemplate.html and evaluate over given price and
+// ROI windows.
+function buildHTMLSummary(price, windows)
+{
+  var URL = SpreadsheetApp.getActive().getUrl();
+  var template = HtmlService.createTemplateFromFile('EmailTemplate.html');
+
+  template.URL = URL;
+  template.btcPrice = price;
+  template.windows = windows;
+  return template.evaluate().getContent();
+}
+
 // Update BTC History spreadsheet
 //
 // Steps:
@@ -165,25 +178,17 @@ function update()
     windows.push(w);
   }
 
-  // Build summary message
+  // Send summary email.
 
   // FIXME: the intention here is to make sure getUrl() points to the specified tab, but I don't
   // think setActiveSheet() accomplishes this.
   ss.setActiveSheet(ss.getSheets()[1]);
 
-  var template = HtmlService.createTemplateFromFile('EmailTemplate.html');
-  template.currTime = currTime;
-  template.btcPrice = btcPrice;
-  template.URL = ss.getUrl();
-  template.windows = windows;
-  var message = template.evaluate().getContent();
-
-  // Send results
   MailApp.sendEmail({
     to: mailingList,
     subject: subject,
     name: "BTC-bot",
-    htmlBody: message
+    htmlBody: buildHTMLSummary(btcPrice,windows)
   });
 }
 
