@@ -21,21 +21,21 @@
   <head>
     <style>
       table {
-	  border-collapse: collapse;
-	  width: 70%
+	        border-collapse: collapse;
+	        width: 70%
       }
 
       td {
-	  padding: 4px;
+	        padding: 4px;
       }
 
       .window {
-	  text-align: right;
-	  font-style: italic;
+	        text-align: right;
+	        font-style: italic;
       }
 
       .change {
-	  text-align: left;
+	        text-align: left;
       }
 
     </style>
@@ -47,8 +47,8 @@
     <table>
       <?for (var i=0; i < windows.length; ++i) { ?>
       <tr>
-	<td class="window"><?=windows[i].windowSize?></td>
-	<td class="change"><?=windows[i].percentChange?> (<?=windows[i].multipleChange?>)</td>
+	      <td class="window"><?=windows[i].windowSize?></td>
+	      <td class="change"><?=windows[i].percentChange?> (<?=windows[i].multipleChange?>)</td>
       </tr>
       <?}?>
     </table>
