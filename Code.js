@@ -108,7 +108,7 @@ function buildHTMLSummary(price, windows)
   var template = HtmlService.createTemplateFromFile('EmailTemplate.html');
 
   template.URL = URL;
-  template.btcPrice = price;
+  template.btcPrice = price.toLocaleString();
   template.windows = windows;
   return template.evaluate().getContent();
 }
