@@ -35,6 +35,14 @@ var subject = 'BTC Update'
 // comma-separated list of recipients.
 var mailingList = 'tjk213@gmail.com'
 
+// Throw an error if \p condition is false.
+function assert(condition, message = "")
+{
+  if (!condition) {
+    throw new Error("AssertionError: " + message);
+  }
+}
+
 // Return the price in USD of the given token.
 function getPrice(coin)
 {
@@ -171,9 +179,8 @@ function update()
 
     // Verify change values
     Logger.log(sheet.getName() + ": " + w.percentChange + " = " + w.multipleChange);
-    if (!w.percentChange.endsWith("%") || !w.multipleChange.endsWith("X")) {
-      throw Error("Invalid change value - column mismatch or formatting issue?");
-    }
+    assert(w.percentChange.endsWith("%"), "Invalid percentage change");
+    assert(w.multipleChange.endsWith("X"),"Invalid multiple change");
 
     // Append to window list
     windows.push(w);
