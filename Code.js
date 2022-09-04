@@ -169,8 +169,9 @@ function update()
     var w = {};
 
     // Get window size from sheet name
-    var nameLen = sheet.getName().length;
-    w.windowSize = sheet.getName().substring(nameLen-4);
+    var sheetName = sheet.getName().split(" - ");
+    assert(sheetName.length == 2,"Unexpected Rolling-ROI sheet name");
+    w.windowSize = "Last " + sheetName[1] + ":";
 
     // Get change values
     var row = getLastRowInColumn(sheet,"G");
