@@ -4,37 +4,33 @@
     <style>
       table {
 	  border-collapse: collapse;
-	  width: 80%;
+	  width: 70%
       }
 
-      th, td {
+      td {
+	  padding: 4px;
+      }
+
+      .window {
 	  text-align: right;
-	  padding: 8px;
+	  font-style: italic;
       }
 
-      /* TODO: Make the table look pretty! */
-      /* tr:nth-child(even) { */
-      /* 	  background-color: #777777; */
-      /* } */
-      
-      /* tr:nth-child(odd) { */
-      /* 	  background-color: #000000; */
-      /* } */
+      .change {
+	  text-align: left;
+      }
+
     </style>
   </head>
   <body>
-    <p>BTC Update:</p>
     <p></p>
-    <p><?=currTime?>: $<?=btcPrice?></p>
+    <p>BTC is currently trading at: $<?=btcPrice?></p>
     <p></p>
-    
     <table>
-      <tr> <th>Window Length</th><th>ROI (%)</th><th>ROI (X)</th></tr>
       <?for (var i=0; i < windows.length; ++i) { ?>
       <tr>
-	<td><?=windows[i].windowSize    ?></td>
-	<td><?=windows[i].percentChange ?></td>
-	<td><?=windows[i].multipleChange?></td>
+	<td class="window"><?=windows[i].windowSize?></td>
+	<td class="change"><?=windows[i].percentChange?> (<?=windows[i].multipleChange?>)</td>
       </tr>
       <?}?>
     </table>
