@@ -102,6 +102,8 @@ function buildHTMLSummary(price, windows)
   var template = HtmlService.createTemplateFromFile('EmailTemplate.html');
 
   template.URL = URL;
+  // FIXME: This doesn't display second decimal if price is an even dime.
+  //        See github issue #1.
   template.btcPrice = price.toLocaleString();
   template.windows = windows;
   return template.evaluate().getContent();
