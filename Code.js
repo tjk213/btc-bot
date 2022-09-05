@@ -187,12 +187,15 @@ function update()
     windows.push(w);
   }
 
+  // Get email body
+  var body = buildHTMLSummary(btcPrice,windows);
+
   // Send summary email.
   MailApp.sendEmail({
     to: mailingList,
     subject: subject,
     name: "BTC-bot",
-    htmlBody: buildHTMLSummary(btcPrice,windows)
+    htmlBody: body
   });
 }
 
@@ -200,20 +203,21 @@ function update()
 // No spreadsheet modifications.
 function testEmail()
 {
-  var currTime = getDateString();
-  var btcPrice = getPrice("BTC");
-
   var windows = [
     {windowSize: "Last 90 days:", percentChange: "+4.1%", multipleChange: "1.04X"},
     {windowSize: "Last 60 days:", percentChange: "+3.1%", multipleChange: "1.03X"},
     {windowSize: "Last 30 days:", percentChange: "+2.1%", multipleChange: "1.02X"}
   ];
 
+  var currTime = getDateString();
+  var btcPrice = getPrice("BTC");
+  var body = buildHTMLSummary(btcPrice,windows);
+
   MailApp.sendEmail({
     to: mailingList,
     subject: subject,
     name: "BTC-bot",
-    htmlBody: buildHTMLSummary(btcPrice,windows)
+    htmlBody: body
   });
 }
 
