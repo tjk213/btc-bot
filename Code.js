@@ -189,9 +189,9 @@ function update()
 function testEmail()
 {
   var windows = [
-    {windowSize: "Last 90 days:", percentChange: "+4.1%", multipleChange: "1.04X"},
-    {windowSize: "Last 60 days:", percentChange: "+3.1%", multipleChange: "1.03X"},
-    {windowSize: "Last 30 days:", percentChange: "+2.1%", multipleChange: "1.02X"}
+    {windowSize: "Last 90 days:", percentChange: "-36.51%", multipleChange: "0.63X"},
+    {windowSize: "Last 60 days:", percentChange:  "-3.11%", multipleChange: "0.97X"},
+    {windowSize: "Last 30 days:", percentChange: "-14.53%", multipleChange: "0.85X"}
   ];
 
   var currTime = getDateString();
