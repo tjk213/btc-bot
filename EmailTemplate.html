@@ -32,8 +32,16 @@
 	        font-style: italic;
       }
 
-      .change {
-	        text-align: left;
+      .percent {
+	        text-align: right;
+          width: 8ch;
+          padding-left: 0px;
+          padding-right: 6px;
+      }
+
+      .multiple {
+          text-align: left;
+          padding-left: 0px;
       }
 
     </style>
@@ -46,7 +54,8 @@
       <?for (var i=0; i < windows.length; ++i) { ?>
       <tr>
 	      <td class="window"><?=windows[i].windowSize?></td>
-	      <td class="change"><?=windows[i].percentChange?> (<?=windows[i].multipleChange?>)</td>
+	      <td class="percent"><?=windows[i].percentChange?></td>
+        <td class="multiple">(<?=windows[i].multipleChange?>)</td>
       </tr>
       <?}?>
     </table>
