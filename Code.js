@@ -115,7 +115,16 @@ function buildHTMLSummary(price, windows)
   URL = trimString(URL,"/edit");
   Logger.log("URL = " + URL);
 
+  // Get chart id
+  var overview = ss.getSheetByName("Overview");
+  assert(overview != null,"No Overview sheet?");
+  var charts = overview.getCharts();
+  assert(charts.length == 1,"Unexpected # of overview charts");
+  var chartID = charts[0].getChartId();
+  Logger.log("chartID = " + chartID);
+
   template.URL = URL;
+  template.chartID = chartID;
   // FIXME: This doesn't display second decimal if price is an even dime.
   //        See github issue #1.
   template.btcPrice = price.toLocaleString();
