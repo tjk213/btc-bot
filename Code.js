@@ -93,13 +93,27 @@ function addRow(ss,searchCol="A",numCols=32)
   range.copyTo(ss.getRange("R"+nextrow+"C1"));
 }
 
+// Return the given string with the given suffix, if present, removed.
+function trimString(x, suffix)
+{
+  if (x.endsWith(suffix)) {
+    x = x.substring(0,x.length-suffix.length);
+  }
+  return x;
+}
+
 // Load template from EmailTemplate.html and evaluate over given price and
 // ROI windows.
 function buildHTMLSummary(price, windows)
 {
-  // TODO: How can we control the tab thats opened on-click?
-  var URL = SpreadsheetApp.getActive().getUrl();
+  var ss = SpreadsheetApp.getActive();
   var template = HtmlService.createTemplateFromFile('EmailTemplate.html');
+
+  // Get trimmed spreadsheet URL
+  // TODO: How can we control the tab thats opened on-click?
+  var URL = ss.getUrl();
+  URL = trimString(URL,"/edit");
+  Logger.log("URL = " + URL);
 
   template.URL = URL;
   // FIXME: This doesn't display second decimal if price is an even dime.
