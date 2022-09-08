@@ -44,6 +44,12 @@
           padding-left: 0px;
       }
 
+      .sources {
+          font-style: italic;
+          font-size: .875em;
+          color: Gray;
+      }
+
     </style>
   </head>
   <body>
@@ -62,7 +68,12 @@
     <p></p>
     <img src=<?=URL + "/pubchart?oid=" + chartID + "&format=image"?> alt="BTC Rolling ROI"/>
     <p></p>
-    <p>All data available in btc-bot's <a href=<?=URL?>>GoogleSheet</a>.</p>
+    <p class="sources">
+      btc-bot's code and data are freely available in btc-bot's
+      <a href="https://github.com/tjk213/btc-bot">GitHub repo</a>
+      and
+      <a href=<?=URL?>>GoogleSheet</a>.
+    </p>
     </body>
 </html>
 
