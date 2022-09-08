@@ -104,9 +104,42 @@ function trimString(x, suffix)
 
 // Load template from EmailTemplate.html and evaluate over given price and
 // ROI windows.
-function buildHTMLSummary(price, windows)
+function buildHTMLSummary(price)
 {
   var ss = SpreadsheetApp.getActive();
+
+  // Extract results from each 'Rolling ROI' sheet
+  var windows = [];
+  for (var i=0; i < ss.getNumSheets(); ++i)
+  {
+    var sheet = ss.getSheets()[i];
+
+    // Skip sheet if its not a Rolling ROI sheet
+    if (!sheet.getName().startsWith("Rolling ROI")) {
+      continue;
+    }
+
+    var w = {};
+
+    // Get window size from sheet name
+    var sheetName = sheet.getName().split(" - ");
+    assert(sheetName.length == 2,"Unexpected Rolling-ROI sheet name");
+    w.windowSize = "Last " + sheetName[1] + ":";
+
+    // Get change values
+    var row = getLastRowInColumn(sheet,"G");
+    w.percentChange  = sheet.getRange("G"+row).getDisplayValue();
+    w.multipleChange = sheet.getRange("H"+row).getDisplayValue();
+
+    // Verify change values
+    Logger.log(sheet.getName() + ": " + w.percentChange + " = " + w.multipleChange);
+    assert(w.percentChange.endsWith("%"), "Invalid percentage change");
+    assert(w.multipleChange.endsWith("X"),"Invalid multiple change");
+
+    // Append to window list
+    windows.push(w);
+  }
+
   var template = HtmlService.createTemplateFromFile('EmailTemplate.html');
 
   // Get trimmed spreadsheet URL
@@ -165,40 +198,8 @@ function update()
     }
   }
 
-  // Extract results from each 'Rolling ROI' sheet
-  var windows = [];
-  for (var i=0; i < ss.getNumSheets(); ++i)
-  {
-    var sheet = ss.getSheets()[i];
-
-    // Skip sheet if its not a Rolling ROI sheet
-    if (!sheet.getName().startsWith("Rolling ROI")) {
-      continue;
-    }
-
-    var w = {};
-
-    // Get window size from sheet name
-    var sheetName = sheet.getName().split(" - ");
-    assert(sheetName.length == 2,"Unexpected Rolling-ROI sheet name");
-    w.windowSize = "Last " + sheetName[1] + ":";
-
-    // Get change values
-    var row = getLastRowInColumn(sheet,"G");
-    w.percentChange  = sheet.getRange("G"+row).getDisplayValue();
-    w.multipleChange = sheet.getRange("H"+row).getDisplayValue();
-
-    // Verify change values
-    Logger.log(sheet.getName() + ": " + w.percentChange + " = " + w.multipleChange);
-    assert(w.percentChange.endsWith("%"), "Invalid percentage change");
-    assert(w.multipleChange.endsWith("X"),"Invalid multiple change");
-
-    // Append to window list
-    windows.push(w);
-  }
-
   // Get email body
-  var body = buildHTMLSummary(btcPrice,windows);
+  var body = buildHTMLSummary(btcPrice);
 
   // Send summary email.
   MailApp.sendEmail({
@@ -213,15 +214,8 @@ function update()
 // No spreadsheet modifications.
 function testEmail()
 {
-  var windows = [
-    {windowSize: "Last 90 days:", percentChange: "-36.51%", multipleChange: "0.63X"},
-    {windowSize: "Last 60 days:", percentChange:  "-3.11%", multipleChange: "0.97X"},
-    {windowSize: "Last 30 days:", percentChange: "-14.53%", multipleChange: "0.85X"}
-  ];
-
-  var currTime = getDateString();
   var btcPrice = getPrice("BTC");
-  var body = buildHTMLSummary(btcPrice,windows);
+  var body = buildHTMLSummary(btcPrice);
 
   MailApp.sendEmail({
     to: mailingList,
