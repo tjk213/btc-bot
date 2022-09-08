@@ -102,11 +102,12 @@ function trimString(x, suffix)
   return x;
 }
 
-// Send email summarizing most recent entry in each Rolling-ROI sheet.
-function emailResults(price = getPrice("BTC"))
+// For each Rolling-ROI sheet in the given spreadsheet,
+// generate a dictionary summarizing the most recently
+// completed window.
+// Returns a list of these summary dictionaries.
+function getMostRecentWindowEntries(ss)
 {
-  var ss = SpreadsheetApp.getActive();
-
   var windows = [];
   for (var i=0; i < ss.getNumSheets(); ++i)
   {
@@ -138,6 +139,14 @@ function emailResults(price = getPrice("BTC"))
     windows.push(w);
   }
 
+  return windows;
+}
+
+// Send email summarizing most recent entry in each Rolling-ROI sheet.
+function emailResults(price = getPrice("BTC"))
+{
+  var ss = SpreadsheetApp.getActive();
+  var windows = getMostRecentWindowEntries(ss);
   var template = HtmlService.createTemplateFromFile('EmailTemplate.html');
 
   // Get trimmed spreadsheet URL
