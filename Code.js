@@ -142,18 +142,24 @@ function getMostRecentWindowEntries(ss)
   return windows;
 }
 
-// Send email summarizing most recent entry in each Rolling-ROI sheet.
-function emailResults(price = getPrice("BTC"))
+// Return URL of given spreadsheet, without any suffixes such as '/edit'.
+function getBaseURL(ss)
 {
-  var ss = SpreadsheetApp.getActive();
-  var windows = getMostRecentWindowEntries(ss);
-  var template = HtmlService.createTemplateFromFile('EmailTemplate.html');
-
-  // Get trimmed spreadsheet URL
   // TODO: How can we control the tab thats opened on-click?
   var URL = ss.getUrl();
   URL = trimString(URL,"/edit");
   Logger.log("URL = " + URL);
+  return URL;
+}
+
+// Send email summarizing most recent entry in each Rolling-ROI sheet.
+function emailResults(price = getPrice("BTC"))
+{
+  var ss = SpreadsheetApp.getActive();
+
+  var URL = getBaseURL(ss)
+  var windows = getMostRecentWindowEntries(ss);
+  var template = HtmlService.createTemplateFromFile('EmailTemplate.html');
 
   // Get chart id
   var overview = ss.getSheetByName("Overview");
