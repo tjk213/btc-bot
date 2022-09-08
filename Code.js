@@ -102,13 +102,11 @@ function trimString(x, suffix)
   return x;
 }
 
-// Load template from EmailTemplate.html and evaluate over given price and
-// ROI windows.
-function buildHTMLSummary(price)
+// Send email summarizing most recent entry in each Rolling-ROI sheet.
+function emailResults(price = getPrice("BTC"))
 {
   var ss = SpreadsheetApp.getActive();
 
-  // Extract results from each 'Rolling ROI' sheet
   var windows = [];
   for (var i=0; i < ss.getNumSheets(); ++i)
   {
@@ -162,7 +160,15 @@ function buildHTMLSummary(price)
   //        See github issue #1.
   template.btcPrice = price.toLocaleString();
   template.windows = windows;
-  return template.evaluate().getContent();
+  var body = template.evaluate().getContent();
+
+  // Send results.
+  MailApp.sendEmail({
+    to: mailingList,
+    subject: subject,
+    name: "BTC-bot",
+    htmlBody: body
+  });
 }
 
 // Update BTC History spreadsheet
@@ -170,9 +176,10 @@ function buildHTMLSummary(price)
 // Steps:
 //   - Update price history log with current time & price of BTC
 //   - Append row to each 'Rolling ROI' sheet
-//   - Email results
 //
-function update()
+// Returns: The recorded BTC price.
+//
+function appendEntry()
 {
   var ss = SpreadsheetApp.getActive();
   ss.setActiveSheet(ss.getSheetByName('Price Log'));
@@ -198,31 +205,14 @@ function update()
     }
   }
 
-  // Get email body
-  var body = buildHTMLSummary(btcPrice);
-
-  // Send summary email.
-  MailApp.sendEmail({
-    to: mailingList,
-    subject: subject,
-    name: "BTC-bot",
-    htmlBody: body
-  });
+  return btcPrice;
 }
 
-// Send update email with fake data.
-// No spreadsheet modifications.
-function testEmail()
+// Update BTC history & send summary email.
+function appendEntryAndEmailResults()
 {
-  var btcPrice = getPrice("BTC");
-  var body = buildHTMLSummary(btcPrice);
-
-  MailApp.sendEmail({
-    to: mailingList,
-    subject: subject,
-    name: "BTC-bot",
-    htmlBody: body
-  });
+  var btcPrice = appendEntry();
+  emailResults(btcPrice);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
