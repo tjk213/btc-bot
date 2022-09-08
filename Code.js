@@ -152,22 +152,35 @@ function getBaseURL(ss)
   return URL;
 }
 
+// Return the ID of the <idx>-th chart in sheet <sheetName>.
+// If <checkLast> is true, then verify that the given sheet
+// does not contain any charts with index greater than <idx>.
+function getChartID(ss, sheetName, idx=0, checkLast=true)
+{
+  var sheet = ss.getSheetByName(sheetName);
+  assert(sheet != null,"Failed to retrieve sheet: " + sheetName);
+  var charts = sheet.getCharts();
+  assert(charts.length > idx,"Unexpected # of charts: invalid index?");
+  var chartID = charts[idx].getChartId();
+
+  if (checkLast) {
+    assert(charts.length == idx+1,
+           "Unexpected # of charts: Extra chart(s) beyond idx (" + idx + ")");
+  }
+
+  Logger.log("chartID = " + chartID);
+  return chartID;
+}
+
 // Send email summarizing most recent entry in each Rolling-ROI sheet.
 function emailResults(price = getPrice("BTC"))
 {
   var ss = SpreadsheetApp.getActive();
 
   var URL = getBaseURL(ss)
+  var chartID = getChartID(ss,"Overview");
   var windows = getMostRecentWindowEntries(ss);
   var template = HtmlService.createTemplateFromFile('EmailTemplate.html');
-
-  // Get chart id
-  var overview = ss.getSheetByName("Overview");
-  assert(overview != null,"No Overview sheet?");
-  var charts = overview.getCharts();
-  assert(charts.length == 1,"Unexpected # of overview charts");
-  var chartID = charts[0].getChartId();
-  Logger.log("chartID = " + chartID);
 
   template.URL = URL;
   template.chartID = chartID;
