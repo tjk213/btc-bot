@@ -173,10 +173,8 @@ function getChartID(ss, sheetName, idx=0, checkLast=true)
 }
 
 // Send email summarizing most recent entry in each Rolling-ROI sheet.
-function emailResults(price = getPrice("BTC"))
+function emailResults(ss = SpreadsheetApp.getActive(), price = getPrice("BTC"))
 {
-  var ss = SpreadsheetApp.getActive();
-
   var URL = getBaseURL(ss)
   var chartID = getChartID(ss,"Overview");
   var windows = getMostRecentWindowEntries(ss);
@@ -207,9 +205,8 @@ function emailResults(price = getPrice("BTC"))
 //
 // Returns: The recorded BTC price.
 //
-function appendEntry()
+function appendEntry(ss = SpreadsheetApp.getActive())
 {
-  var ss = SpreadsheetApp.getActive();
   ss.setActiveSheet(ss.getSheetByName('Price Log'));
 
   // Get time & price
@@ -239,8 +236,9 @@ function appendEntry()
 // Update BTC history & send summary email.
 function appendEntryAndEmailResults()
 {
-  var btcPrice = appendEntry();
-  emailResults(btcPrice);
+  var ss = SpreadsheetApp.getActive();
+  var btcPrice = appendEntry(ss);
+  emailResults(ss,btcPrice);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
