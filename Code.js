@@ -214,6 +214,30 @@ function getFirstWindow(sheet)
   return firstWindow;
 }
 
+// Parse the given Rolling-ROI sheet and return the window size.
+// Returns window size as lower-case string with format 'xx-unit'.
+// For example: 180-day, 4-year.
+function getWindowSize(sheet)
+{
+  assert(sheet != null, "Invalid sheet");
+  assert(sheet.getName().startsWith("Rolling ROI"),"Not a Rolling-ROI sheet?");
+
+  var windowSizeLabel = sheet.getRange("J4").getValue();
+  var windowSizeValue = sheet.getRange("K4").getValue();
+  var windowSizeUnits = sheet.getRange("L4").getValue();
+
+  assert(windowSizeLabel.toLowerCase().startsWith("window size"),"Missing window size?");
+
+  // The units should be plural (e.g., 'days') - chop the s off the end.
+  if (windowSizeUnits.endsWith('s')) {
+    windowSizeUnits = windowSizeUnits.substring(0,windowSizeUnits.length-1);
+  }
+
+  // Merge value & units into hyphenated string
+  var windowSizeString = windowSizeValue + "-" + windowSizeUnits.toLowerCase();
+  return windowSizeString;
+}
+
 // Send email summarizing most recent entry in each Rolling-ROI sheet.
 function emailResults(ss = SpreadsheetApp.getActive(), price = getPrice("BTC"))
 {
