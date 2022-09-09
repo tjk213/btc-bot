@@ -191,6 +191,29 @@ function getChartID(ss, sheetName, idx=0, checkLast=true)
   return chartID;
 }
 
+// Parse the given Rolling-ROI sheet and return the first instance of the window.
+function getFirstWindow(sheet)
+{
+  assert(sheet != null, "Invalid sheet");
+  assert(sheet.getName().startsWith("Rolling ROI"),"Not a Rolling-ROI sheet?");
+
+  var startLabel = sheet.getRange("C4").getDisplayValue();
+  var startFirst = sheet.getRange("C5").getDisplayValue();
+  var endLabel   = sheet.getRange("D4").getDisplayValue();
+  var endFirst   = sheet.getRange("D5").getDisplayValue();
+
+  assert(startLabel.toLowerCase().startsWith("start"),"Failed to find first window");
+  assert(  endLabel.toLowerCase().startsWith("end"),  "Failed to find first window");
+
+  // TODO: Add prices & change values, only returning start & end dates for now.
+  var firstWindow = {
+    start: startFirst,
+    end: endFirst
+  };
+
+  return firstWindow;
+}
+
 // Send email summarizing most recent entry in each Rolling-ROI sheet.
 function emailResults(ss = SpreadsheetApp.getActive(), price = getPrice("BTC"))
 {
