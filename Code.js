@@ -28,6 +28,25 @@ function assert(condition, message = "")
   }
 }
 
+// Parse the last <lengthOfSuffix> characters of the string <x> as an
+// integer and return it.
+function parseSuffixAsInt(x,lengthOfSuffix) {
+  var len = x.length;
+  return parseInt(x.substring(len-lengthOfSuffix-1));
+}
+
+// Parse the first <lengthOfPrefix> characters of the string <x> as a
+// float and return it.
+function parsePrefixAsFloat(x,lengthOfPrefix) {
+  return parseFloat(x.substring(0,lengthOfPrefix));
+}
+
+// Parse a multiple-change value (e.g., 40.33X) as a float and return it.
+function parseMultipleChangeAsFloat(change) {
+  assert(change.endsWith('X'),"Invalid change value");
+  return parsePrefixAsFloat(change,change.length-1);
+}
+
 // Return the price in USD of the given token.
 function getPrice(coin)
 {
