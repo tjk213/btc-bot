@@ -18,12 +18,18 @@
 <html>
   <head>
     <style>
+
+      .price {
+          color: lightgray;
+      }
+
       table {
 	        border-collapse: collapse;
 	        width: 70%
       }
 
       td {
+          color: lightgray;
 	        padding: 4px;
       }
 
@@ -59,7 +65,7 @@
   </head>
   <body>
     <p></p>
-    <p>BTC/USD: $<?=btcPrice?></p>
+    <p class="price">BTC/USD: $<?=btcPrice?></p>
     <p></p>
     <table>
       <?for (var i=0; i < windows.length; ++i) { ?>
