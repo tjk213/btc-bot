@@ -238,6 +238,30 @@ function getWindowSize(sheet)
   return windowSizeString;
 }
 
+// Parse the given Rolling-ROI sheet and return the worst instance of the window.
+function getWorstWindow(sheet)
+{
+  assert(sheet != null, "Invalid sheet");
+  assert(sheet.getName().startsWith("Rolling ROI"),"Not a Rolling-ROI sheet?");
+
+  var minLabel          = sheet.getRange("K10").getValue();
+  var minPercentChange  = sheet.getRange("L10").getDisplayValue();
+  var minMultipleChange = sheet.getRange("M10").getDisplayValue();
+  var minStart          = sheet.getRange("O10").getDisplayValue();
+  var minEnd            = sheet.getRange("P10").getDisplayValue();
+
+  assert(minLabel.toLowerCase().startsWith("min"),"Failed to find min window");
+
+  var worstWindow = {
+    start: minStart,
+    end: minEnd,
+    percentChange: minPercentChange,
+    multipleChange: minMultipleChange
+  };
+
+  return worstWindow;
+}
+
 // Send email summarizing most recent entry in each Rolling-ROI sheet.
 function emailResults(ss = SpreadsheetApp.getActive(), price = getPrice("BTC"))
 {
