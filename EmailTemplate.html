@@ -24,13 +24,13 @@
       }
 
       table {
-	        border-collapse: collapse;
-	        width: 70%
+          border-collapse: collapse;
+          width: 70%
       }
 
       td {
           color: lightgray;
-	        padding: 4px;
+          padding: 4px;
       }
 
       .worst-case {
@@ -39,12 +39,12 @@
       }
 
       .window {
-	        text-align: right;
-	        font-style: italic;
+          text-align: right;
+          font-style: italic;
       }
 
       .percent {
-	        text-align: right;
+          text-align: right;
           width: 8ch;
           padding-left: 0px;
           padding-right: 6px;
@@ -70,8 +70,8 @@
     <table>
       <?for (var i=0; i < windows.length; ++i) { ?>
       <tr>
-	      <td class="window"><?=windows[i].windowSize?></td>
-	      <td class="percent"><?=windows[i].percentChange?></td>
+        <td class="window"><?=windows[i].windowSize?></td>
+        <td class="percent"><?=windows[i].percentChange?></td>
         <td class="multiple">(<?=windows[i].multipleChange?>)</td>
       </tr>
       <?}?>
