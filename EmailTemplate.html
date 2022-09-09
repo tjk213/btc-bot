@@ -27,6 +27,11 @@
 	        padding: 4px;
       }
 
+      .worst-case {
+          color: lightgray;
+          font-style: italic;
+      }
+
       .window {
 	        text-align: right;
 	        font-style: italic;
@@ -65,6 +70,7 @@
       </tr>
       <?}?>
     </table>
+    <p class="worst-case"><?=worstWindow?></p>
     <p></p>
     <img src=<?=URL + "/pubchart?oid=" + chartID + "&format=image"?> alt="BTC Rolling ROI"/>
     <p></p>

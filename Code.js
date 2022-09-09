@@ -262,16 +262,61 @@ function getWorstWindow(sheet)
   return worstWindow;
 }
 
+// Parse the given Rolling-ROI sheet and return a paragraph summarizing
+// the worst instance of the window.
+function getWorstWindowText(sheet)
+{
+  var windowSize  = getWindowSize(sheet);
+  var worstWindow = getWorstWindow(sheet);
+  var firstWindow = getFirstWindow(sheet);
+
+  var worstWindowText = "The worst " + windowSize + " return that bitcoin " +
+      "has ever had is " + worstWindow.percentChange + " (" + worstWindow.multipleChange + ").";
+
+  // If our data doesn't go back at least to 2011, then insert a parenthetical that
+  // qualifies the time window we are talking about.
+  var firstWindowStartYear = parseSuffixAsInt(firstWindow.start,2);
+  if (firstWindowStartYear > 11)
+  {
+    var insertIdx = worstWindowText.indexOf('had') + 3;
+    var startString = worstWindowText.slice(0,insertIdx);
+    var endString = worstWindowText.slice(insertIdx);
+    worstWindowText = startString + " (since " + firstWindow.start + ")" + endString;
+  }
+
+  // When we launch, we'll be working with x-month windows, but development
+  // is currently using x-day windows. Use this distinction to detect if we're
+  // in test mode.
+  //
+  // TODO: Either eliminate need for this, or create formal definition
+  // of test mode and give it proper scope
+  var testMode = windowSize.endsWith('day');
+
+  // If the worst possible timing still yielded a 2X return or greater, append an
+  // extra sentence emphasizing this.
+  // TODO: Consider cutting this - less is more?
+  if (parseMultipleChangeAsFloat(worstWindow.multipleChange) > 2.0 || testMode)
+  {
+    worstWindowText += " That's right, if you had the worst possible timing and bought " +
+      "at the peak in " + worstWindow.start + ", your " + windowSize +
+      " return was "+worstWindow.percentChange+" ("+worstWindow.multipleChange+").";
+  }
+
+  return worstWindowText;
+}
+
 // Send email summarizing most recent entry in each Rolling-ROI sheet.
 function emailResults(ss = SpreadsheetApp.getActive(), price = getPrice("BTC"))
 {
   var URL = getBaseURL(ss)
   var chartID = getChartID(ss,"Overview");
   var windows = getMostRecentWindowEntries(ss);
+  var worstWindowTxt = getWorstWindowText(ss.getSheets()[1]);
   var template = HtmlService.createTemplateFromFile('EmailTemplate.html');
 
   template.URL = URL;
   template.chartID = chartID;
+  template.worstWindow = worstWindowTxt;
   // FIXME: This doesn't display second decimal if price is an even dime.
   //        See github issue #1.
   template.btcPrice = price.toLocaleString();
