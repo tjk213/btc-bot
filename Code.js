@@ -272,8 +272,9 @@ function getWorstWindowText(sheet)
   var worstWindow = getWorstWindow(sheet);
   var firstWindow = getFirstWindow(sheet);
 
-  var worstWindowText = "The worst " + windowSize + " return that bitcoin " +
-      "has ever had is " + worstWindow.percentChange + " (" + worstWindow.multipleChange + ").";
+  var worstWindowText = "The worst " + windowSize + " return that bitcoin has ever had," +
+      " if you had the worst possible timing and bought at the peak in " + worstWindow.start +
+      ", was " + worstWindow.percentChange + " (" + worstWindow.multipleChange + ").";
 
   // If our data doesn't go back at least to 2011, then insert a parenthetical that
   // qualifies the time window we are talking about.
@@ -284,24 +285,6 @@ function getWorstWindowText(sheet)
     var startString = worstWindowText.slice(0,insertIdx);
     var endString = worstWindowText.slice(insertIdx);
     worstWindowText = startString + " (since " + firstWindow.start + ")" + endString;
-  }
-
-  // When we launch, we'll be working with x-month windows, but development
-  // is currently using x-day windows. Use this distinction to detect if we're
-  // in test mode.
-  //
-  // TODO: Either eliminate need for this, or create formal definition
-  // of test mode and give it proper scope
-  var testMode = windowSize.endsWith('day');
-
-  // If the worst possible timing still yielded a 2X return or greater, append an
-  // extra sentence emphasizing this.
-  // TODO: Consider cutting this - less is more?
-  if (parseMultipleChangeAsFloat(worstWindow.multipleChange) > 2.0 || testMode)
-  {
-    worstWindowText += " That's right, if you had the worst possible timing and bought " +
-      "at the peak in " + worstWindow.start + ", your " + windowSize +
-      " return was "+worstWindow.percentChange+" ("+worstWindow.multipleChange+").";
   }
 
   return worstWindowText;
