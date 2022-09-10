@@ -128,6 +128,7 @@ function trimString(x, suffix)
 function getMostRecentWindowEntries(ss)
 {
   var windows = [];
+  var firstEntry = true;
   for (var i=0; i < ss.getNumSheets(); ++i)
   {
     var sheet = ss.getSheets()[i];
@@ -142,7 +143,7 @@ function getMostRecentWindowEntries(ss)
     // Get window size from sheet name
     var sheetName = sheet.getName().split(" - ");
     assert(sheetName.length == 2,"Unexpected Rolling-ROI sheet name");
-    w.windowSize = "Last " + sheetName[1] + ":";
+    w.windowSize = (firstEntry ? "Last " : "") + sheetName[1] + ":";
 
     // Get change values
     var row = getLastRowInColumn(sheet,"G");
@@ -156,6 +157,7 @@ function getMostRecentWindowEntries(ss)
 
     // Append to window list
     windows.push(w);
+    firstEntry = false;
   }
 
   return windows;
