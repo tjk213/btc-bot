@@ -23,6 +23,12 @@
           color: lightgray;
       }
 
+      .separator {
+          background-color: darkgray;
+          margin-top:    3px;
+          margin-bottom: 3px;
+      }
+
       table {
           border-collapse: collapse;
           width: 70%
@@ -59,6 +65,7 @@
           font-style: italic;
           font-size: .875em;
           color: gray;
+          margin: 0px;
       }
 
     </style>
@@ -79,8 +86,7 @@
     <p class="worst-case"><?=worstWindow?></p>
     <p></p>
     <img src=<?=URL + "/pubchart?oid=" + chartID + "&format=image"?> alt="BTC Rolling ROI"/>
-    <p></p>
-    <hr color="gray">
+    <hr class="separator">
     <p class="sources">
       btc-bot's code and data are freely available in btc-bot's
       <a href="https://github.com/tjk213/btc-bot">GitHub repo</a>
