@@ -302,9 +302,7 @@ function emailResults(ss = SpreadsheetApp.getActive(), price = getPrice("BTC"))
   template.URL = URL;
   template.chartID = chartID;
   template.worstWindow = worstWindowTxt;
-  // FIXME: This doesn't display second decimal if price is an even dime.
-  //        See github issue #1.
-  template.btcPrice = price.toLocaleString();
+  template.btcPrice = price.toLocaleString("en-US",{style:"currency",currency:"USD"});
   template.windows = windows;
   var body = template.evaluate().getContent();
 
