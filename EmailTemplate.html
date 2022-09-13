@@ -71,28 +71,28 @@
   </head>
   <body>
     <p></p>
-    <p class="price">BTC/USD: <?=btcPrice?></p>
+    <p class="price">BTC/USD: <!--PS:btcPrice--></p>
     <p></p>
     <table>
-      <?for (var i=0; i < windows.length; ++i) { ?>
+      <!--SS:for (var i=0; i < windows.length; ++i) {-->
       <tr>
-        <td class="window"><?=windows[i].windowSize?></td>
-        <td class="percent"><?=windows[i].percentChange?></td>
-        <td class="multiple">(<?=windows[i].multipleChange?>)</td>
+        <td class="window">   <!--PS:windows[i].windowSize--></td>
+        <td class="percent">  <!--PS:windows[i].percentChange--></td>
+        <td class="multiple">(<!--PS:windows[i].multipleChange-->)</td>
       </tr>
-      <?}?>
+      <!--SS:}-->
     </table>
-    <p class="worst-case"><?=worstWindow?></p>
+    <p class="worst-case"><!--PS:worstWindow--></p>
     <p></p>
-    <img src=<?=URL + "/pubchart?oid=" + chartID + "&format=image"?> alt="BTC Rolling ROI"/>
+    <img src='<!--PS:URL+"/pubchart?oid="+chartID+"&format=image"-->' alt="BTC Rolling ROI"/>
     <hr class="separator">
     <p class="sources">
       btc-bot's code and data are freely available in btc-bot's
       <a href="https://github.com/tjk213/btc-bot">GitHub repo</a>
       and
-      <a href=<?=URL?>>GoogleSheet</a>.
+      <a href="<!--PS:URL-->">GoogleSheet</a>.
     </p>
-    </body>
+  </body>
 </html>
 
 <!---------------------------------------------------------------------------------->
