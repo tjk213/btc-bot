@@ -297,7 +297,7 @@ function emailResults(ss = SpreadsheetApp.getActive(), price = getPrice("BTC"))
   var chartID = getChartID(ss,"Overview");
   var windows = getMostRecentWindowEntries(ss);
   var worstWindowTxt = getWorstWindowText(ss.getSheets()[1]);
-  var template = HtmlService.createTemplateFromFile('EmailTemplate.html');
+  var template = HtmlService.createTemplateFromFile('Email.gt.html');
 
   template.URL = URL;
   template.chartID = chartID;
