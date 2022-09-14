@@ -16,7 +16,7 @@ The charts are auto-updated on a monthly basis and the results are shared via em
 
 `btc-bot` can be built with the following:
 
-```
+``` bash
 % pip install -r requirements.txt  # Install python dependencies
 % make                             # Build btc-bot
 ```
