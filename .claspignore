@@ -25,4 +25,4 @@
 ## Whitelist only files that need to be deployed
 !Code.js
 !appsscript.json
-!Email.gt.html
+!Email.inlined.gt.html
