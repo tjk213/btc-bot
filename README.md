@@ -21,7 +21,7 @@ The charts are auto-updated on a monthly basis and the results are shared via em
 % make                             # Build btc-bot
 ```
 
-The build system's primary function is to inline all CSS into embedded HTML `style` tags in preparation for emailing. For more information on why this is necessary, see [HTML Compilation Notes](doc/HTMLCompilation.md).
+The build system's primary function is to inline all CSS into embedded HTML style tags in preparation for emailing. For more information on why this is necessary, see [HTML Compilation Notes](doc/HTMLCompilation.md).
 
 Once built, `btc-bot` is ready for deployment to the GoogleScripts system, which is managed through [Clasp](https://github.com/google/clasp). 
 
