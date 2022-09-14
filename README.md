@@ -12,11 +12,20 @@
 
 The charts are auto-updated on a monthly basis and the results are shared via email. If you would like to be added to the distribution list please send me a note at tjk213@gmail.com.
 
-## Development & Contributing
+## Building & Deployment
 
-Deployment to the GoogleScripts system is managed through [Clasp](https://github.com/google/clasp). 
+`btc-bot` can be built with the following:
 
-All other updates & requests are managed here through GitHub. If you would like to contribute or make a request please feel free to open an issue, PR, or contact me via email.
+```
+% pip install -r requirements.txt  # Install python dependencies
+% make                             # Build btc-bot
+```
+
+The build system's primary function is to inline all CSS into embedded HTML `style` tags in preparation for emailing. Once built, `btc-bot` is ready for deployment to the GoogleScripts system, which is managed through [Clasp](https://github.com/google/clasp). 
+
+## Contributing
+
+Contributions are welcome. If you would like to contribute or make a request please feel free to open an issue, PR, or contact me via email.
 
 ## Troubleshooting
 
