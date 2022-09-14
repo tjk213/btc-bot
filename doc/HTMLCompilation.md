@@ -5,7 +5,7 @@
 `btc-bot`'s HTML is processed by a lightweight compilation toolchain prior to deployment:
 
   - Inline CSS into embedded HTML style tags using [premailer](https://github.com/peterbe/premailer)
-  - Convert designated inline comments into google scriptlet tags with [gscc.py](/../tools/gscc.py)
+  - Convert designated inline comments into google scriptlet tags with [gscc.py](../tools/gscc.py)
 
 ### Requirements
 
