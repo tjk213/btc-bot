@@ -23,6 +23,6 @@
 **/**
 
 ## Whitelist only files that need to be deployed
-!Code.js
 !appsscript.json
+!src/btcbot.js
 !build/Email.inlined.gt.html
