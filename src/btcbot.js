@@ -20,6 +20,9 @@ var subject = 'BTC Update'
 // comma-separated list of recipients.
 var mailingList = 'tjk213@gmail.com'
 
+var btcAddr = 'https://docs.google.com/spreadsheets/d/' +
+    '1SCET9X5JJvSuIBAybjNuWY4eSyoU-FAPOjs8OsnJJO8/edit#gid=1179120677&range=B6:E6'
+
 // Throw an error if \p condition is false.
 function assert(condition, message = "")
 {
@@ -311,6 +314,7 @@ function emailResults(ss = SpreadsheetApp.getActive(), price = getPrice("BTC"))
 
   template.URL = URL;
   template.chartID = chartID;
+  template.btcAddrLink = btcAddr;
   template.worstWindow = worstWindowTxt;
   template.btcPrice = price.toLocaleString("en-US",{style:"currency",currency:"USD"});
   template.windows = windows;
