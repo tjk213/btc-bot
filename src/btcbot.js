@@ -140,10 +140,15 @@ function getMostRecentWindowEntries(ss)
 
     var w = {};
 
-    // Get window size from sheet name
-    var sheetName = sheet.getName().split(" - ");
-    assert(sheetName.length == 2,"Unexpected Rolling-ROI sheet name");
-    w.windowSize = (firstEntry ? "Last " : "") + sheetName[1] + ":";
+    // Get window size & add surrounding text.
+    // We add the 'Last ' prefix only on the first row to avoid redundancy, so
+    // the table will look something like this:
+    //
+    //   Last 4 years: <data>
+    //        2 years: <data>
+    //
+    var windowSize = getWindowSize(sheet);
+    w.windowSize = (firstEntry ? "Last " : "") + windowSize + ":";
 
     // Get change values
     var row = getLastRowInColumn(sheet,"G");
