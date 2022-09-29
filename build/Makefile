@@ -65,6 +65,12 @@ all: $(HTML_TGT)
 %.gt.html: %.ct.html
 	$(GSCC) -o $@ $<
 
+# This is a pass-through target, we don't have any work to do here, we just want to
+# express that <push> depends on <all>.
+# TODO: Move this to its own file that we include here.
+.PHONY: push
+push: all
+	@ # Do nothing
 clean:
 	@rm -f $(HTML_TGT) $(HTML_TMP)
 
