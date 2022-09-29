@@ -217,9 +217,13 @@ function getFirstWindow(sheet)
 }
 
 // Parse the given Rolling-ROI sheet and return the window size.
-// Returns window size as lower-case string with format 'xx-unit'.
-// For example: 180-day, 4-year.
-function getWindowSize(sheet)
+// Returns window size as lower-case string with the following format:
+//
+//      'xx<delim>unit(s)'.
+//
+// Where <delim> is given by \p delimeter and the final 's' is controlled by
+// \p plural.
+function getWindowSize(sheet,plural=true,delimeter=' ')
 {
   assert(sheet != null, "Invalid sheet");
   assert(sheet.getName().startsWith("Rolling ROI"),"Not a Rolling-ROI sheet?");
@@ -229,14 +233,15 @@ function getWindowSize(sheet)
   var windowSizeUnits = sheet.getRange("L4").getValue();
 
   assert(windowSizeLabel.toLowerCase().startsWith("window size"),"Missing window size?");
+  assert(windowSizeUnits.endsWith('s'),"Unexpected singular unit");
 
-  // The units should be plural (e.g., 'days') - chop the s off the end.
-  if (windowSizeUnits.endsWith('s')) {
+  // Chop the s off the end of the units if requested.
+  if (!plural) {
     windowSizeUnits = windowSizeUnits.substring(0,windowSizeUnits.length-1);
   }
 
-  // Merge value & units into hyphenated string
-  var windowSizeString = windowSizeValue + "-" + windowSizeUnits.toLowerCase();
+  // Merge value & units into single string with given delimeter.
+  var windowSizeString = windowSizeValue + delimeter + windowSizeUnits.toLowerCase();
   return windowSizeString;
 }
 
@@ -268,7 +273,7 @@ function getWorstWindow(sheet)
 // the worst instance of the window.
 function getWorstWindowText(sheet)
 {
-  var windowSize  = getWindowSize(sheet);
+  var windowSize  = getWindowSize(sheet,plural=false,delimeter='-');
   var worstWindow = getWorstWindow(sheet);
   var firstWindow = getFirstWindow(sheet);
 
