@@ -356,20 +356,25 @@ function emailResults(ss = SpreadsheetApp.getActive(), price = getPrice("BTC"))
 //
 // Returns: The recorded BTC price.
 //
-function appendEntry(ss = SpreadsheetApp.getActive())
+function appendEntry(ss = SpreadsheetApp.getActive(), intervalTimeInDays=1)
 {
   ss.setActiveSheet(ss.getSheetByName('Price Log'));
 
   // Get time & price
   var currTime = getDateString();
-  var btcPrice = getPrice("BTC");
+  var priceAction = getPriceSummary("BTC",intervalTimeInDays);
 
-  Logger.log(currTime + ": $" + btcPrice);
+  Logger.log(currTime + ": $" + priceAction.lastPrice);
 
   // Log time & price in history tab
   var nextRow = getLastRowInColumn(ss,"B") + 1;
   ss.getRange("R"+nextRow+"C2").setValue(currTime);
-  ss.getRange("R"+nextRow+"C3").setValue(btcPrice);
+  ss.getRange("R"+nextRow+"C3").setValue(priceAction.highPrice);
+  ss.getRange("R"+nextRow+"C4").setValue(priceAction.lowPrice);
+  ss.getRange("R"+nextRow+"C5").setValue(priceAction.openPrice);
+  ss.getRange("R"+nextRow+"C6").setValue(priceAction.lastPrice);
+  ss.getRange("R"+nextRow+"C7").setValue(priceAction.weightedAvgPrice);
+  ss.getRange("R"+nextRow+"C8").setValue(priceAction.source);
 
   // Append row to each 'Rolling ROI' sheet
   for (var i=0; i < ss.getNumSheets(); ++i)
@@ -381,7 +386,7 @@ function appendEntry(ss = SpreadsheetApp.getActive())
     }
   }
 
-  return btcPrice;
+  return parseFloat(priceAction.lastPrice);
 }
 
 // Update BTC history & send summary email.
