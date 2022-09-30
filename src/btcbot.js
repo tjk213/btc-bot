@@ -53,9 +53,10 @@ function parseMultipleChangeAsFloat(change) {
 // Return the price in USD of the given token.
 function getPrice(coin)
 {
-  var url = "https://cryptoprices.cc/" + coin;
+  var url = "https://api.binance.us/api/v3/ticker?symbol=" + coin + "USD&windowSize=1d";
   var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
-  return parseFloat(response);
+  response = JSON.parse(response);
+  return parseFloat(response.lastPrice);
 }
 
 // Return a string representation of the given date, in active locale.
