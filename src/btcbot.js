@@ -50,13 +50,31 @@ function parseMultipleChangeAsFloat(change) {
   return parsePrefixAsFloat(change,change.length-1);
 }
 
-// Return the price in USD of the given token.
-function getPrice(coin)
+// Return a dictionary summarizing the price action of the given coin over the
+// given time interval. Supported keys include:
+//
+//  - highPrice
+//  - lowPrice
+//  - openPrice
+//  - lastPrice
+//  - weightedAvgPrice
+//  - source
+//
+// The 'source' key denotes the system used to retrieve the data.
+function getPriceSummary(coin,intervalTimeInDays=1)
 {
-  var url = "https://api.binance.us/api/v3/ticker?symbol=" + coin + "USD&windowSize=1d";
+  assert(!isNaN(parseInt(intervalTimeInDays)),"Invalid time interval");
+  var params = coin + "USD&windowSize=" + intervalTimeInDays + "d";
+  var url = "https://api.binance.us/api/v3/ticker?symbol=" + params;
   var response = UrlFetchApp.fetch(url, {'muteHttpExceptions': true});
   response = JSON.parse(response);
-  return parseFloat(response.lastPrice);
+  response.source = "binance";
+  return response;
+}
+
+// Return the price in USD of the given token.
+function getPrice(coin) {
+  return parseFloat(getPriceSummary(coin).lastPrice);
 }
 
 // Return a string representation of the given date, in active locale.
