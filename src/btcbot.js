@@ -391,19 +391,19 @@ function appendEntry(ss = SpreadsheetApp.getActive(), intervalTimeInDays=1)
   return parseFloat(priceAction.lastPrice);
 }
 
-function appendDailyEntry(ss = SpreadsheetApp.getActive()) {
-  appendEntry(ss,1);
+function appendDailyEntry() {
+  return appendEntry(SpreadsheetApp.getActive(),1);
 }
 
-function appendWeeklyEntry(ss = SpreadsheetApp.getActive()) {
-  appendEntry(ss,7);
+function appendWeeklyEntry() {
+  return appendEntry(SpreadsheetApp.getActive(),7);
 }
 
 // Update BTC history & send summary email.
 function appendEntryAndEmailResults()
 {
   var ss = SpreadsheetApp.getActive();
-  var btcPrice = appendDailyEntry(ss);
+  var btcPrice = appendDailyEntry();
   emailResults(ss,btcPrice);
 }
 
