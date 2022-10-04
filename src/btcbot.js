@@ -20,8 +20,10 @@ var subject = 'BTC Update'
 // comma-separated list of recipients.
 var mailingList = 'tjk213@gmail.com'
 
+// BTC Weekly Spreadsheet
+// Link points specifically to address cell in overview tab.
 var btcAddr = 'https://docs.google.com/spreadsheets/d/' +
-    '1SCET9X5JJvSuIBAybjNuWY4eSyoU-FAPOjs8OsnJJO8/edit#gid=1179120677&range=B6:E6'
+    '1oU5AoMBPenULElk5RNvuY1ke-_UJCWgsRN9J9LluVY4/edit#gid=1179120677&range=C6:E6'
 
 // Throw an error if \p condition is false.
 function assert(condition, message = "")
