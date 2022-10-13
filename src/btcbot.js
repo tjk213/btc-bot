@@ -324,8 +324,14 @@ function getWorstWindowText(sheet)
   return worstWindowText;
 }
 
-// Send email summarizing most recent entry in each Rolling-ROI sheet.
-function emailResults(ss = SpreadsheetApp.getActive(), price = getPrice("BTC"))
+// Populate the template from Email.ct.html with the following:
+//
+//   - Given BTC <price>
+//   - Most recent entry in each Rolling-ROI sheet in <ss>
+//   - The given unsubscription <passphrase>
+//
+//   ... and send results to the mailing-list.
+function emailResults(ss, price, passphrase)
 {
   var URL = getBaseURL(ss)
   var chartID = getChartID(ss,"Overview");
@@ -339,6 +345,7 @@ function emailResults(ss = SpreadsheetApp.getActive(), price = getPrice("BTC"))
   template.worstWindow = worstWindowTxt;
   template.btcPrice = price.toLocaleString("en-US",{style:"currency",currency:"USD"});
   template.windows = windows;
+  template.unsubscribePassphrase = passphrase;
   var body = template.evaluate().getContent();
 
   // Send results.
@@ -348,6 +355,21 @@ function emailResults(ss = SpreadsheetApp.getActive(), price = getPrice("BTC"))
     name: "BTC-bot",
     htmlBody: body
   });
+}
+
+function emailResultsFromBunkerbuster() {
+  var passphrase = "Thanks for the pills, Bunkerbuster!";
+  emailResults(SpreadsheetApp.getActive(),getPrice("BTC"),passphrase);
+}
+
+function emailResultsFromTyger() {
+  var passphrase = "Thanks for the pills, Tyger!";
+  emailResults(SpreadsheetApp.getActive(),getPrice("BTC"),passphrase);
+}
+
+function emailResultsFromTy() {
+  var passphrase = "Thanks for the pills, Ty!";
+  emailResults(SpreadsheetApp.getActive(),getPrice("BTC"),passphrase);
 }
 
 // Update BTC History spreadsheet
