@@ -348,6 +348,7 @@ function emailResults(ss, price, passphrase)
   var template = HtmlService.createTemplateFromFile('build/Email.inlined.gt.html');
 
   template.URL = URL;
+  template.docName = ss.getName();
   template.chartID = chartID;
   template.btcAddrLink = btcAddr;
   template.worstWindow = worstWindowTxt;
