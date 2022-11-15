@@ -130,9 +130,17 @@ function getLastRowInColumn(ss, col)
 // are extended. <numcols> specifies the width of the row.
 function addRow(ss,searchCol="A",numCols=32)
 {
+  // Get the last row of data into a range.
   var lastrow = getLastRowInColumn(ss,searchCol);
   var nextrow = lastrow + 1;
   var range = ss.getRange("R"+lastrow+"C1:R"+lastrow+"C"+numCols);
+
+  // Add ten rows to the sheet if we're at the end.
+  if (ss.getMaxRows() == lastrow) {
+    ss.insertRowsAfter(lastrow,10);
+  }
+
+  // Do the copy.
   range.copyTo(ss.getRange("R"+nextrow+"C1"));
 }
 
