@@ -366,16 +366,19 @@ function emailResults(ss, price, passphrase)
   });
 }
 
+// WARNING: Testing this function on the weekly sheet will no trigger an auto-forward!
 function emailResultsFromBunkerbuster() {
   var passphrase = "Thanks for the pills, Bunkerbuster!";
   emailResults(SpreadsheetApp.getActive(),getPrice("BTC"),passphrase);
 }
 
+// WARNING: Testing these functions on the weekly sheet will no trigger an auto-forward!
 function emailResultsFromTyger() {
   var passphrase = "Thanks for the pills, Tyger!";
   emailResults(SpreadsheetApp.getActive(),getPrice("BTC"),passphrase);
 }
 
+// WARNING: Testing these functions on the weekly sheet will no trigger an auto-forward!
 function emailResultsFromTy() {
   var passphrase = "Thanks for the pills, Ty!";
   emailResults(SpreadsheetApp.getActive(),getPrice("BTC"),passphrase);
